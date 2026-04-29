@@ -1,56 +1,114 @@
-# Proyecto-Estructura
-El análisis de complejidad se define como una técnica para caracterizar el tiempo que tarda un algoritmo en función del tamaño de la entrada (independientemente de la máquina, el lenguaje y el compilador). Se utiliza para evaluar las variaciones en el tiempo de ejecución de diferentes algoritmos.
+# Análisis de Complejidad: Quick Sort
 
-La complejidad temporal de Quick Sort es O(n log n) en promedio , pero puede llegar a ser O(n^2) en el peor de los casos . La complejidad espacial de Quick Sort en el mejor de los casos es O(log n) , mientras que en el peor de los casos , se convierte en O(n) debido a una partición desequilibrada que provoca un árbol de recursión sesgado que requiere una pila de llamadas de tamaño O(n).
+## Introducción
 
-# Análisis de complejidad temporal en el mejor caso de Quick Sort: O(N * logN)
-T(K): Complejidad temporal del quicksort de K elementos.
-P(K): Complejidad temporal para encontrar la posición del pivote entre K elementos.
+El análisis de complejidad es una técnica para caracterizar el tiempo que tarda un algoritmo en función del tamaño de la entrada, de forma independiente a la máquina, el lenguaje de programación y el compilador utilizados. Se emplea para evaluar y comparar las variaciones en el tiempo de ejecución de diferentes algoritmos.
 
-El mejor caso se da cuando seleccionamos el pivote como la media. Entonces, aquí
+**Quick Sort** es uno de los algoritmos de ordenación más utilizados en la práctica. Su complejidad temporal es **O(n log n)** en el caso promedio, aunque puede degradarse a **O(n²)** en el peor caso. En cuanto a la complejidad espacial, varía entre **O(log n)** en el mejor caso y **O(n)** en el peor caso, debido a particiones desequilibradas que generan un árbol de recursión sesgado con una pila de llamadas proporcional a n.
 
-T(N) = 2 * T(N / 2) + N * constante
+---
 
-Ahora T(N/2) también es 2*T(N/4) + N/2 * constante. Entonces,
+## Análisis de Complejidad Temporal
 
-T(N) = 2*(2*T(N / 4) + N / 2 * constante) + N * constante 
-= 4 * T(N / 4) + 2 * constante * N.
+### Mejor caso: O(N log N)
 
-Entonces, podemos decir que
+El mejor caso ocurre cuando el pivote seleccionado divide el arreglo en dos mitades iguales. Definimos:
 
-T(N) = 2 k * T(N / 2 k ) + k * constante * N
+- `T(K)`: complejidad temporal de Quick Sort sobre K elementos.
+- `P(K)`: complejidad temporal para encontrar la posición del pivote entre K elementos.
 
-entonces, 2 k = N 
-k = log 2 N
+La recurrencia es:
 
-Entonces T(N) = N * T(1) + N * log 2 N . Por lo tanto, la complejidad temporal es O(N * logN) .
+```
+T(N) = 2 · T(N/2) + N · c
+```
 
-# Análisis de complejidad temporal en el peor de los casos de Quick Sort: O(N 2 ) .
-El peor caso ocurrirá cuando el arreglo se divida en dos partes, una parte que consta de N-1 elementos y la otra, y así sucesivamente. Entonces,
+Expandiendo la recurrencia:
 
-T(N) = T(N - 1) + N * constante 
-= T(N - 2) + (N - 1) * constante + N * constante = T(N - 2) + 2 * N * constante - constante 
-= T(N - 3) + 3 * N * constante - 2 * constante - constante 
-. . . 
-= T(N - k) + k * N * constante - (k - 1) * constante - . . . - 2*constante - constante 
-= T(N - k) + k * N * constante - constante * (k*(k - 1))/2
+```
+T(N) = 2 · (2·T(N/4) + (N/2)·c) + N·c
+     = 4 · T(N/4) + 2·c·N
 
-Si sustituimos k = N en la ecuación anterior, entonces
+En general:
+     = 2^k · T(N/2^k) + k·c·N
+```
 
-T(N) = T(0) + N * N * constante - constante * (N * (N-1)/2) 
-= N 2 - N*(N-1)/2 
-= N 2 /2 + N/2
+Cuando `2^k = N`, se tiene `k = log₂N`, por lo tanto:
 
-Por lo tanto, la complejidad en el peor de los casos es O( N² )
+```
+T(N) = N · T(1) + N · log₂N
+```
 
-# Casos de uso (¿Cuándo es mejor usarlo?).
-se utiliza principalmente cuando se requiere ordenar grandes volúmenes de datos de manera eficiente y rápida, siendo uno de los algoritmos más rápidos en la práctica con una complejidad promedio de \(O(n \log n)\).
+**Complejidad resultante: O(N log N)**
 
-Quicksort puede tener algunas desventajas, pero es el algoritmo de ordenación más rápido y eficiente disponible. Quicksort tiene una O(log n)complejidad espacial baja, lo que lo convierte en una excelente opción para situaciones donde el espacio es limitado.
+---
 
-Aunque el tiempo de ejecución en el peor de los casos siempre es el mismo, Quicksort suele ser más rápido que HeapSort (nlogn). Quicksort ocupa menos espacio que HeapSort debido a que un montón es prácticamente un árbol binario completo con la sobrecarga de punteros. Por lo tanto, a la hora de ordenar matrices, se prefiere Quicksort. 
+### Peor caso: O(N²)
 
-# comparativa teórica contra otro método.
-Quicksort puede tener algunas desventajas, pero es el algoritmo de ordenación más rápido y eficiente disponible. Quicksort tiene una O(log n)complejidad espacial baja, lo que lo convierte en una excelente opción para situaciones donde el espacio es limitado.
+El peor caso ocurre cuando el pivote siempre divide el arreglo en una parte de `N-1` elementos y otra de `0`. La recurrencia es:
 
-Aunque el tiempo de ejecución en el peor de los casos siempre es el mismo, Quicksort suele ser más rápido que HeapSort (nlogn). Quicksort ocupa menos espacio que HeapSort debido a que un montón es prácticamente un árbol binario completo con la sobrecarga de punteros. Por lo tanto, a la hora de ordenar matrices, se prefiere Quicksort.
+```
+T(N) = T(N-1) + N · c
+     = T(N-2) + (N-1)·c + N·c
+     = T(N-2) + 2·N·c - c
+     ...
+     = T(N-k) + k·N·c - c · (k(k-1)/2)
+```
+
+Sustituyendo `k = N`:
+
+```
+T(N) = T(0) + N²·c - c · (N(N-1)/2)
+     = N² - N(N-1)/2
+     = N²/2 + N/2
+```
+
+**Complejidad resultante: O(N²)**
+
+---
+
+### Caso promedio: O(N log N)
+
+En la práctica, Quick Sort opera con una complejidad promedio de **O(N log N)**, lo que lo convierte en uno de los algoritmos de ordenación más eficientes para grandes volúmenes de datos.
+
+---
+
+## Casos de Uso
+
+Quick Sort se recomienda principalmente cuando:
+
+- Se requiere ordenar **grandes volúmenes de datos** de forma eficiente.
+- El espacio en memoria es limitado, aprovechando su baja complejidad espacial de **O(log n)**.
+- Se trabaja con **arreglos en memoria** (no con listas enlazadas), donde el acceso aleatorio es rápido.
+- El conjunto de datos no presenta patrones que provoquen el peor caso (como arreglos ya ordenados sin aleatorización del pivote).
+
+> ⚠️ **Precaución:** Quick Sort no es estable (no preserva el orden relativo de elementos iguales) y su rendimiento puede degradarse a O(N²) con malas elecciones del pivote.
+
+---
+
+## Comparativa Teórica: Quick Sort vs. Heap Sort
+
+| Criterio                   | Quick Sort          | Heap Sort           |
+|----------------------------|---------------------|---------------------|
+| Mejor caso                 | O(N log N)          | O(N log N)          |
+| Caso promedio              | O(N log N)          | O(N log N)          |
+| Peor caso                  | **O(N²)**           | O(N log N)          |
+| Complejidad espacial       | O(log N)            | O(1)                |
+| Estabilidad                | No estable          | No estable          |
+| Rendimiento en la práctica | **Más rápido**      | Más predecible      |
+| Localidad de caché         | Alta                | Baja                |
+| Uso preferido              | Arreglos en memoria | Garantía de O(N log N) |
+
+### Conclusión de la comparativa
+
+Aunque Heap Sort garantiza O(N log N) incluso en el peor caso, Quick Sort suele ser **más rápido en la práctica** debido a su mejor localidad de caché y menor número de comparaciones e intercambios constantes. Quick Sort también requiere menos espacio adicional que Heap Sort, ya que un montón (heap) es esencialmente un árbol binario completo con sobrecarga de punteros.
+
+**Recomendación:** Para ordenar arreglos en memoria donde la velocidad práctica es prioritaria, se prefiere Quick Sort. Si se necesita una garantía estricta de O(N log N) en todos los casos, Heap Sort es la mejor opción.
+
+---
+
+## Referencias
+
+- Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2009). *Introduction to Algorithms* (3rd ed.). MIT Press.
+- Sedgewick, R., & Wayne, K. (2011). *Algorithms* (4th ed.). Addison-Wesley.
+- GeeksforGeeks. (2024). *QuickSort Algorithm*. https://www.geeksforgeeks.org/quick-sort/
