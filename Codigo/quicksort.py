@@ -1,5 +1,6 @@
 import time
 import sys
+import os  # Se añade para manejar rutas
 
 # Aumentamos el límite de recursividad para manejar listas grandes
 sys.setrecursionlimit(100000)
@@ -19,8 +20,18 @@ def quicksort(lista):
 
 def procesar_ordenamiento(nombre_archivo):
     try:
+        # Obtenemos la ruta del directorio donde se encuentra este script
+        dir_script = os.path.dirname(os.path.abspath(__file__))
+        
+        # Intentamos localizar el archivo en el mismo directorio (caso: script en Codigo/)
+        ruta_archivo = os.path.join(dir_script, nombre_archivo)
+        
+        # Si no existe ahí, buscamos dentro de la subcarpeta 'Codigo' (caso: script en la raíz)
+        if not os.path.exists(ruta_archivo):
+            ruta_archivo = os.path.join(dir_script, "Codigo", nombre_archivo)
+
         # Lectura del archivo
-        with open(nombre_archivo, "r") as f:
+        with open(ruta_archivo, "r") as f:
             # Convertimos cada línea en un entero
             numeros = [int(linea.strip()) for linea in f]
         
@@ -45,5 +56,5 @@ def procesar_ordenamiento(nombre_archivo):
         print("Error: El archivo contiene datos que no son números válidos.")
 
 # Ejecución del programa
-# Asegúrate de que el archivo se llame 'numeros.txt' y esté en la misma carpeta
+# Asegúrate de que el archivo se llame 'numeros.txt' y esté dentro de la carpeta Codigo
 procesar_ordenamiento("numeros.txt")
