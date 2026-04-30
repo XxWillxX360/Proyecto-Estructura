@@ -107,6 +107,28 @@ Aunque Heap Sort garantiza O(N log N) incluso en el peor caso, Quick Sort suele 
 
 ---
 
+## Instrucciones de Ejecución
+
+Para ejecutar este proyecto en tu máquina local, sigue estos pasos:
+
+1. **Requisitos Previos:**
+   - Tener instalado [Python 3.x](https://www.python.org/downloads/).
+
+2. **Preparación de Datos:**
+   - Asegúrate de que el archivo `numeros.txt` se encuentre dentro de la carpeta `Codigo/`. Este archivo debe contener los números a ordenar (uno por línea).
+
+3. **Ejecución del Algoritmo:**
+   - Abre una terminal en la raíz del proyecto.
+   - Ejecuta el siguiente comando:
+     ```bash
+     python Codigo/quicksort.py
+     ```
+
+4. **Resultados:**
+   - El programa imprimirá en la terminal el tiempo total de ejecución en milisegundos y confirmará que el ordenamiento se ha completado.
+
+---
+
 ## Referencias
 
 - Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2009). *Introduction to Algorithms* (3rd ed.). MIT Press.
